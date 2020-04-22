@@ -19,9 +19,55 @@ p {
   margin: 0 0 10px;
 }
 
+button {
+  width: 400px;
+  height: 50px;
+font-size: 2em;
+  border: 2px solid black;
+  outline: none;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.block-words {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1100px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.item {
+  position: relative;
+
+  width: 200px;
+  height: 80px;
+  margin: 10px;
+  padding-top: 5px;
+
+  font-size: 1.5em;
+  text-align: center;
+
+  border: 1px solid black;
+}
+
+.translate {
+  display: none;
+}
+
+.audio-icon {
+  position: absolute;
+  top: 20px;
+  left: 5px;
+
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+
+  background-image: url("images/icons/audio-icon.png");
+  background-size: cover;
+}
