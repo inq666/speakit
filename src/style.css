@@ -41,6 +41,7 @@ button {
 }
 
 .start-window {
+  text-align: center;
   position: fixed;
   z-index: 999;
 
@@ -52,8 +53,6 @@ button {
 
 .modal-window {
   margin-top: 3%;
-
-  text-align: center;
 }
 
 .start-title {
@@ -72,6 +71,29 @@ button {
   font-size: 2.5em;
   color: #000000;
 }
+
+.good-luck {
+  display: none;
+  margin-top: 15%;
+  text-transform: uppercase;
+font-size: 13em;
+color: #ffffffe5;
+opacity: 0;
+transition: opacity 1s linear;
+animation: opacity-start 3.5s;
+}
+
+@keyframes opacity-start {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+
 
 .start-btn {
   width: 350px;
@@ -131,10 +153,10 @@ button {
   width: 240px;
   height: 90px;
   margin: 5px;
-  padding-top: 10px;
+  padding-top: 12px;
   padding-left: 25px;
 
-  font-size: 1.5em;
+  font-size: 1.3em;
   text-align: center;
   color: rgb(68, 68, 68);
 
@@ -170,7 +192,7 @@ button {
 .audio-icon {
   position: absolute;
   top: 25px;
-  left: 10px;
+  left: 5px;
 
   display: inline-block;
   width: 40px;

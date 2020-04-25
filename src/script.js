@@ -6,6 +6,7 @@ class Words {
     this.currentGroup = '00';
     window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
     this.recognition = new window.SpeechRecognition();
+    this.recognition.lang = 'en-US';
     this.statisticsInfo = JSON.parse(localStorage.getItem('statistics')) || [];
   }
 
@@ -29,6 +30,8 @@ class Words {
     this.statistics = document.querySelector('.statistics');
     this.statisticsButton = document.querySelector('.statistics-btn');
     this.itemStatistics = document.querySelector('.item-statistics');
+    this.imageSrc = this.wordImage.getAttribute('src');
+    this.itemStatistics.remove();
   }
 
   addEventListener() {
@@ -74,14 +77,9 @@ class Words {
       newItem.querySelector('.stat-unsolved').textContent = `Unsolved ${this.statisticsInfo[i].unsolved}`;
       document.querySelector('.statistics-modal-window').append(newItem);
     }
-    this.itemStatistics.remove();
   }
 
   newGame() {
-    const activeWord = document.querySelector('.item-word-active');
-    if (activeWord !== null) {
-      activeWord.classList.remove('item-word-active');
-    }
     this.returnGame(true);
     this.getWords();
     this.resetStat();
@@ -101,10 +99,17 @@ class Words {
   }
 
   resetStat() {
+    this.wordImage.src = this.imageSrc;
     document.querySelector('.stars').style.opacity = '0';
     document.querySelectorAll('.star-win').forEach((item) => {
       item.classList.remove('star-win');
       item.classList.add('star-lose');
+    });
+    this.blockWords.querySelectorAll('.item-word').forEach((item) => {
+      item.classList.remove('guessed-word');
+      if (item.classList.contains('item-word-active')) {
+        item.classList.remove('item-word-active');
+      }
     });
     this.stringWord.textContent = '';
     this.stringWord.classList.remove('play-game');
@@ -145,9 +150,6 @@ class Words {
         item.classList.remove('chain-active');
         targetChain.classList.add('chain-active');
       });
-      this.blockWords.querySelectorAll('.item-word').forEach((item) => {
-        item.classList.remove('item-word-active');
-      });
       this.currentGroup = targetChain.dataset.level;
       this.getWords();
       this.resetStat();
@@ -173,7 +175,7 @@ class Words {
   recording(event) {
     const transcript = event.results[0][0].transcript.toLowerCase();
     if (event.results[0].isFinal) {
-      this.stringWord.textContent = transcript;
+      this.stringWord.textContent = transcript.split(' ')[0];
       Array.from(this.blockWords.children).forEach((item) => {
         if (item.querySelector('.word').textContent === transcript) {
           const currentNumber = item.dataset.number;
@@ -201,7 +203,11 @@ class Words {
   }
 
   async getWords() {
-    document.querySelector('.start-window').style.display = 'none';
+    setTimeout(() => {
+      document.querySelector('.start-window').style.display = 'none';
+    }, 3500);
+    document.querySelector('.modal-window').style.display = 'none';
+    document.querySelector('.good-luck').style.display = 'block';
     this.page = Math.floor(Math.random() * (29 + 1));
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${this.page}&group=${this.currentGroup}`;
     const res = await fetch(url);
@@ -214,7 +220,7 @@ class Words {
     for (let i = 0; i < this.blockWords.children.length; i += 1) {
       const number = json[i].image.slice(-8, -4);
       this.blockWords.children[i].dataset.number = number;
-      this.blockWords.children[i].querySelector('.word').textContent = json[i].word;
+      this.blockWords.children[i].querySelector('.word').textContent = (json[i].word).toLowerCase();
       this.blockWords.children[i].querySelector('.transcription').textContent = json[i].transcription;
       urlArray.push(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20200422T174219Z.a6338781f9423192.28f2896df71fd9376630fd91e64a03518d511f99&text= ${json[i].word} &lang=en-ru`);
     }
