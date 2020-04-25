@@ -3,6 +3,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = (env, options) => {
   const isProduction = options.mode === 'production';
@@ -24,7 +25,16 @@ module.exports = (env, options) => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env']
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    targets: {
+                      esmodules: true,
+                    },
+                  },
+                ],
+              ],
             }
           }
         },
@@ -48,6 +58,7 @@ module.exports = (env, options) => {
     },
 
     plugins: [
+      new FaviconsWebpackPlugin('./src/images/icons/site.png'),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: './src/index.html'

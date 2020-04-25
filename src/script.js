@@ -13,7 +13,7 @@ class Words {
     this.wordImage = document.querySelector('.word-image');
     this.startButton = document.querySelector('.start-btn');
     this.resultButton = document.querySelector('.result-btn');
-    this.newGameButton = document.querySelector('.results-new-game');
+    this.newGameButtonResult = document.querySelector('.results-new-game');
     this.backButton = document.querySelector('.stat-back');
     this.newGameButton = document.querySelector('.new-game-btn');
     this.blockWords = document.querySelector('.block-words');
@@ -32,7 +32,7 @@ class Words {
   }
 
   addEventListener() {
-    this.newGameButton.addEventListener('click', () => this.newGame());
+    this.newGameButtonResult.addEventListener('click', () => this.newGame());
     this.backButton.addEventListener('click', () => this.backStatistics());
     this.statisticsButton.addEventListener('click', () => this.openStatistics());
     this.newGameButton.addEventListener('click', () => this.newGame());
@@ -64,7 +64,9 @@ class Words {
     for (let i = 0; i < this.statisticsInfo.length; i += 1) {
       if (i === 8) return;
       if (this.statisticsInfo.length) {
-        document.querySelector('.statistics-text').style.display = 'none';
+        if (document.querySelector('.statistics-text') !== null) {
+          document.querySelector('.statistics-text').style.display = 'none';
+        }
       }
       const newItem = this.itemStatistics.cloneNode(true);
       newItem.querySelector('.date').textContent = (this.statisticsInfo[i].date).slice(0, 25);
@@ -80,7 +82,6 @@ class Words {
     if (activeWord !== null) {
       activeWord.classList.remove('item-word-active');
     }
-    this.gameMode = false;
     this.returnGame(true);
     this.getWords();
     this.resetStat();
@@ -105,16 +106,17 @@ class Words {
       item.classList.remove('star-win');
       item.classList.add('star-lose');
     });
-    this.gameMode = false;
     this.stringWord.textContent = '';
     this.stringWord.classList.remove('play-game');
     this.recognition.stop();
+    if (!this.gameMode) return;
     const obj = {
       guessed: this.correctly,
       unsolved: this.unsolved,
       date: `${new Date()}`,
     };
     this.statisticsInfo.unshift(obj);
+    this.gameMode = false;
   }
 
   openResult() {
