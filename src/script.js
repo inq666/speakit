@@ -74,7 +74,7 @@ class Words {
       const newItem = this.itemStatistics.cloneNode(true);
       newItem.querySelector('.date').textContent = (this.statisticsInfo[i].date).slice(0, 25);
       newItem.querySelector('.stat-guess').textContent = `Guessed: ${this.statisticsInfo[i].guessed}`;
-      newItem.querySelector('.stat-unsolved').textContent = `Unsolved ${this.statisticsInfo[i].unsolved}`;
+      newItem.querySelector('.stat-unsolved').textContent = `Unsolved: ${this.statisticsInfo[i].unsolved}`;
       document.querySelector('.statistics-modal-window').append(newItem);
     }
   }
@@ -107,11 +107,14 @@ class Words {
     });
     this.blockWords.querySelectorAll('.item-word').forEach((item) => {
       item.classList.remove('guessed-word');
+      item.dataset.guess = 'false';
       if (item.classList.contains('item-word-active')) {
         item.classList.remove('item-word-active');
       }
     });
     this.stringWord.textContent = '';
+    this.countGuess.textContent = '0';
+    this.countUnsolved.textContent = '10';
     this.stringWord.classList.remove('play-game');
     this.recognition.stop();
     if (!this.gameMode) return;
@@ -125,9 +128,6 @@ class Words {
   }
 
   openResult() {
-    if (this.correctly === 10) {
-      this.resetStat();
-    }
     this.results.style.display = 'block';
     this.blockWords.querySelectorAll('.item-word').forEach((item) => {
       item.classList.add('words-results');
@@ -139,6 +139,9 @@ class Words {
         this.unsolvedContainer.append(item);
       }
     });
+    if (this.correctly === 10) {
+      this.resetStat();
+    }
   }
 
 
