@@ -30,7 +30,7 @@ class Words {
     this.statisticsButton = document.querySelector('.statistics-btn');
     this.itemStatistics = document.querySelector('.item-statistics');
     this.itemStatistics.remove();
-    setTimeout(() => alert('ТЗ было написано очень расплывчато, поэтому, если Вам кажется, что что-то работает не так напишите мне. Discord/Telegram: inq666'), 500);
+    setTimeout(() => alert('ТЗ было написано очень расплывчато, поэтому, если Вам кажется, что что-то работает не так напишите мне. Discord/Telegram: inq666'), 600);
   }
 
   addEventListener() {
@@ -141,8 +141,8 @@ class Words {
       item.classList.remove('star-win');
       item.classList.add('star-lose');
     });
-    this.blockWords.querySelectorAll('.item-word').forEach((item) => {
-      if (!item.classList.contains('guessed-word') && this.gameMode) {
+    document.querySelectorAll('.item-word').forEach((item) => {
+      if (!item.dataset.guess === 'false' && this.gameMode) {
         this.arrUnsolved.push(item.querySelector('.word').textContent + item.querySelector('.transcription').textContent + item.querySelector('.translate').textContent);
       }
       item.classList.remove('guessed-word');
@@ -250,6 +250,7 @@ class Words {
   }
 
   async getWords() {
+    this.generationWords = true;
     setTimeout(() => {
       document.querySelector('.start-window').style.display = 'none';
     }, 3500);
@@ -281,10 +282,11 @@ class Words {
     for (let k = 0; k < this.blockWords.children.length; k += 1) {
       this.blockWords.children[k].querySelector('.translate').textContent = wordArray[k];
     }
+    this.generationWords = false;
   }
 
   audioWord(event) {
-    if (this.gameMode) return;
+    if (this.gameMode || this.generationWords) return;
     const targetWord = event.target.closest('.item-word');
     if (targetWord !== null) {
       const currentNumber = targetWord.dataset.number;
