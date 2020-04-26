@@ -7,7 +7,7 @@ class Words {
     window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
     this.recognition = new window.SpeechRecognition();
     this.recognition.lang = 'en-US';
-    this.statisticsInfo = JSON.parse(localStorage.getItem('statistics')) || [];
+    this.statisticsInfo = JSON.parse(localStorage.getItem('statistics-speakitinq666')) || [];
   }
 
   createDOM() {
@@ -30,6 +30,7 @@ class Words {
     this.statisticsButton = document.querySelector('.statistics-btn');
     this.itemStatistics = document.querySelector('.item-statistics');
     this.itemStatistics.remove();
+    setTimeout(() => alert('ТЗ было написано очень расплывчато, поэтому, если Вам кажется, что что-то работает не так напишите мне. Discord/Telegram: inq666'), 500);
   }
 
   addEventListener() {
@@ -51,7 +52,7 @@ class Words {
     });
     window.addEventListener('click', (event) => this.audioWord(event));
     window.addEventListener('unload', () => {
-      localStorage.setItem('statistics', JSON.stringify(this.statisticsInfo));
+      localStorage.setItem('statistics-speakitinq666', JSON.stringify(this.statisticsInfo));
     });
   }
 
