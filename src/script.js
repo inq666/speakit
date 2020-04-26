@@ -11,6 +11,7 @@ class Words {
   }
 
   createDOM() {
+    this.modalWindow = document.querySelector('.statistics-modal-window');
     this.wordImage = document.querySelector('.word-image');
     this.startButton = document.querySelector('.start-btn');
     this.resultButton = document.querySelector('.result-btn');
@@ -35,6 +36,7 @@ class Words {
   }
 
   addEventListener() {
+    this.statistics.addEventListener('click', (event) => this.checkGame(event));
     this.newGameButtonResult.addEventListener('click', () => this.newGame());
     this.backButton.addEventListener('click', () => this.backStatistics());
     this.statisticsButton.addEventListener('click', () => this.openStatistics());
@@ -56,7 +58,40 @@ class Words {
     });
   }
 
+  checkGame(event) {
+    if (event.target.closest('.item-statistics')) {
+      this.openStat = true;
+      const target = event.target.closest('.item-statistics');
+      let indexDiv = 0;
+      this.modalWindow.querySelectorAll('.item-statistics').forEach((item, index) => {
+        if (item === target) {
+          indexDiv = index;
+        }
+      });
+      this.modalWindow.style.display = 'none';
+      document.querySelector('.statistics-word').style.display = 'block';
+      this.statisticsInfo[indexDiv].arrGuess.forEach((item) => {
+        const newDiv = document.createElement('div');
+        newDiv.textContent = item;
+        document.querySelector('.statistics-words-guessed').append(newDiv);
+      });
+      this.statisticsInfo[indexDiv].arrUnsolved.forEach((item) => {
+        const newDiv = document.createElement('div');
+        newDiv.textContent = item;
+        document.querySelector('.statistics-words-unsolved').append(newDiv);
+      });
+    }
+  }
+
   backStatistics() {
+    if (this.openStat) {
+      this.modalWindow.style.display = 'block';
+      document.querySelector('.statistics-word').style.display = 'none';
+      document.querySelector('.statistics-words-unsolved').textContent = '';
+      document.querySelector('.statistics-words-guessed').textContent = '';
+      this.openStat = false;
+      return;
+    }
     this.statistics.style.display = 'none';
     if (!this.statisticsInfo.length) return;
     document.querySelector('.statistics-modal-window').innerHTML = '';
@@ -65,7 +100,10 @@ class Words {
   openStatistics() {
     this.statistics.style.display = 'block';
     for (let i = 0; i < this.statisticsInfo.length; i += 1) {
-      if (i === 8) return;
+      if (i === 10) {
+        this.statisticsInfo.pop();
+        return;
+      };
       if (this.statisticsInfo.length) {
         if (document.querySelector('.statistics-text') !== null) {
           document.querySelector('.statistics-text').style.display = 'none';
@@ -106,6 +144,9 @@ class Words {
       item.classList.add('star-lose');
     });
     this.blockWords.querySelectorAll('.item-word').forEach((item) => {
+      if (!item.classList.contains('guessed-word') && this.gameMode) {
+        this.arrUnsolved.push(item.querySelector('.word').textContent + item.querySelector('.transcription').textContent + item.querySelector('.translate').textContent);
+      }
       item.classList.remove('guessed-word');
       item.dataset.guess = 'false';
       if (item.classList.contains('item-word-active')) {
@@ -119,6 +160,8 @@ class Words {
     this.recognition.stop();
     if (!this.gameMode) return;
     const obj = {
+      arrGuess: this.arrGuess,
+      arrUnsolved: this.arrUnsolved,
       guessed: this.correctly,
       unsolved: this.unsolved,
       date: `${new Date()}`,
@@ -165,6 +208,8 @@ class Words {
     if (activeWord !== null) {
       activeWord.classList.remove('item-word-active');
     }
+    this.arrGuess = [];
+    this.arrUnsolved = [];
     this.correctly = 0;
     this.unsolved = 10;
     this.recognition.start();
@@ -186,6 +231,7 @@ class Words {
           if (currentPage < 10) {
             currentPage = `0${currentPage}`;
           }
+          this.arrGuess.push(item.querySelector('.word').textContent + item.querySelector('.transcription').textContent + item.querySelector('.translate').textContent);
           this.correctly += 1;
           this.unsolved -= 1;
           this.audio.src = 'audio/correct.mp3';
