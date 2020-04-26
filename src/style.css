@@ -22,8 +22,8 @@ p {
 }
 
 button {
-  max-width: 300px;
   width: 100%;
+  max-width: 300px;
   height: 50px;
 
   font-size: 2em;
@@ -33,20 +33,22 @@ button {
 }
 
 .container {
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 5%;
+
+  text-align: center;
 }
 
 .start-window {
-  text-align: center;
   position: fixed;
   z-index: 999;
 
   width: 100vw;
   height: 100vh;
+
+  text-align: center;
 
   background-image: url("images/img/start-window.jpg");
 }
@@ -75,12 +77,15 @@ button {
 .good-luck {
   display: none;
   margin-top: 15%;
+
+  font-size: 13em;
+  color: #ffffffe5;
   text-transform: uppercase;
-font-size: 13em;
-color: #ffffffe5;
-opacity: 0;
-transition: opacity 1s linear;
-animation: opacity-start 3.5s;
+
+  opacity: 0;
+
+  transition: opacity 1s linear;
+  animation: opacity-start 3.5s;
 }
 
 @keyframes opacity-start {
@@ -235,8 +240,9 @@ animation: opacity-start 3.5s;
 .statistics-btn,
 .new-game-btn {
   margin: 10px;
-text-transform: uppercase;
+
   color: #ffffff;
+  text-transform: uppercase;
 
   background-color: #25c09f;
   border-radius: 15px;
@@ -373,8 +379,8 @@ text-transform: uppercase;
 }
 
 .results-modal-window,
- .statistics-modal-window,
- .statistics-word {
+.statistics-modal-window,
+.statistics-word {
   width: 750px;
   height: 850px;
   margin: 2% auto 0;
@@ -388,21 +394,23 @@ text-transform: uppercase;
 }
 
 .statistics-word h2 {
-  color: #007a25;
   margin-bottom: 10px;
+
   font-size: 2em;
+  color: #007a25;
   text-transform: uppercase;
   text-decoration: underline;
 }
 
 .title-stat-unsolved {
-  color: rgb(179, 0, 0) !important
+  color: rgb(179, 0, 0) !important;
 }
 
 .statistics-words-guessed div,
 .statistics-words-unsolved div {
-  font-size: 2em;
   margin: 20px;
+
+  font-size: 2em;
 }
 
 .title-guessed,
@@ -411,12 +419,13 @@ text-transform: uppercase;
 }
 
 .stat-container {
-  justify-content: center;
   display: flex;
+  justify-content: center;
 }
 
 .statistics-word {
   position: relative;
+
   display: none;
 }
 
@@ -458,6 +467,7 @@ text-transform: uppercase;
 .results-modal-window .translate,
 .results-modal-window .transcription {
   margin-left: 15px;
+
   color: #808080;
 }
 
@@ -507,26 +517,29 @@ text-transform: uppercase;
 }
 
 .item-statistics {
-cursor: pointer;
-transition: background 0.1s linear;
+  cursor: pointer;
+
+  transition: background 0.1s linear;
 }
 
 .item-statistics:hover {
- background-color: #6189f88e;
+  background-color: #6189f88e;
 }
 
 .stat-guess,
 .stat-unsolved {
-  padding-top: 4px;
-  font-size: 1.2em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.301);
   display: inline-block;
-  color: #ffffff;
-  height: 30px;
-  border-radius: 15px;
-  margin: 10px;
-  background-color: #2ba81a;
   width: 280px;
+  height: 30px;
+  margin: 10px;
+  padding-top: 4px;
+
+  font-size: 1.2em;
+  color: #ffffff;
+
+  background-color: #2ba81a;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.301);
 }
 
 .stat-unsolved {
@@ -536,7 +549,8 @@ transition: background 0.1s linear;
 .stat-back {
   display: block;
   width: 700px;
-margin: 3px auto;
+  margin: 3px auto;
+
   font-weight: bold;
   font-size: 2.5em;
   color: #861b1b;
@@ -552,19 +566,20 @@ margin: 3px auto;
   transition: box-shadow 0.5s, background 0.5s, transform 0.5s, color 0.5s linear;
 }
 
- .statistics-text {
-   color: rgb(94, 94, 94);
-   position: relative;
+.statistics-text {
+  position: relative;
   top: 35%;
+
   font-size: 4em;
+  color: rgb(94, 94, 94);
 }
 
 .stat-back:hover {
   color: #ad1f1fda;
-  transform: scale(1.1);
+
   background-color: rgba(255, 255, 255, 0.781);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.753);
-
+  transform: scale(1.1);
 }
 
 .stat-back:active {

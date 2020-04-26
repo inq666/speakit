@@ -23,15 +23,12 @@ class Words {
     this.speakButton = document.querySelector('.speak-btn');
     this.menu = document.querySelector('.menu');
     this.results = document.querySelector('.results');
-    this.guessedContainer = document.querySelector('.guessed-container');
-    this.unsolvedContainer = document.querySelector('.unsolved-container');
     this.countGuess = document.querySelector('.count-guessed');
     this.countUnsolved = document.querySelector('.count-unsolved');
     this.returnButton = document.querySelector('.results-return');
     this.statistics = document.querySelector('.statistics');
     this.statisticsButton = document.querySelector('.statistics-btn');
     this.itemStatistics = document.querySelector('.item-statistics');
-    this.imageSrc = this.wordImage.getAttribute('src');
     this.itemStatistics.remove();
   }
 
@@ -46,15 +43,15 @@ class Words {
     this.returnButton.addEventListener('click', () => this.returnGame());
     this.startButton.addEventListener('click', () => this.getWords());
     this.resultButton.addEventListener('click', () => this.openResult());
-    window.addEventListener('click', (event) => this.audioWord(event));
-    window.addEventListener('unload', () => {
-      localStorage.setItem('statistics', JSON.stringify(this.statisticsInfo));
-    });
     this.recognition.addEventListener('result', (event) => this.recording(event));
     this.recognition.addEventListener('end', () => {
       if (this.gameMode) {
         this.recognition.start();
       }
+    });
+    window.addEventListener('click', (event) => this.audioWord(event));
+    window.addEventListener('unload', () => {
+      localStorage.setItem('statistics', JSON.stringify(this.statisticsInfo));
     });
   }
 
@@ -137,7 +134,7 @@ class Words {
   }
 
   resetStat() {
-    this.wordImage.src = this.imageSrc;
+    this.wordImage.src = this.wordImage.getAttribute('src');
     document.querySelector('.stars').style.opacity = '0';
     document.querySelectorAll('.star-win').forEach((item) => {
       item.classList.remove('star-win');
@@ -175,11 +172,11 @@ class Words {
     this.blockWords.querySelectorAll('.item-word').forEach((item) => {
       item.classList.add('words-results');
       if (item.classList.contains('guessed-word')) {
-        this.guessedContainer.append(item);
+        document.querySelector('.guessed-container').append(item);
         item.classList.remove('guessed-word');
         item.dataset.guess = true;
       } else {
-        this.unsolvedContainer.append(item);
+        document.querySelector('.unsolved-container').append(item);
       }
     });
     if (this.correctly === 10) {
