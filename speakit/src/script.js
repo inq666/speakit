@@ -30,7 +30,6 @@ class Words {
     this.statisticsButton = document.querySelector('.statistics-btn');
     this.itemStatistics = document.querySelector('.item-statistics');
     this.itemStatistics.remove();
-    setTimeout(() => alert('ТЗ было написано очень расплывчато, поэтому, если Вам кажется, что что-то работает не так напишите мне. Discord/Telegram: inq666'), 600);
   }
 
   addEventListener() {
